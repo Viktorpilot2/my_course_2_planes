@@ -25,18 +25,18 @@ class PlanesInfo:
 
 
     def __is_valid_data(self):
-        if self.reg_country is None or not isinstance(self.reg_country, str):
+        if not isinstance(self.reg_country, str) or self.reg_country is None:
             self.reg_country = "Страна не указана"
-        if self.callsign is None or not isinstance(self.callsign, str | int):
+        if not isinstance(self.callsign, str | int) or self.callsign is None:
             self.callsign = "Позывной не указан"
-        if self.baro_altitude < 0 or not isinstance(self.baro_altitude, int | float):
+        if not isinstance(self.baro_altitude, int | float) or self.baro_altitude < 0:
             self.baro_altitude = 0
-        if self.velocity < 0 or not isinstance(self.velocity, int | float):
+        if not isinstance(self.velocity, int | float) or self.velocity < 0:
             self.velocity = 0
 
 
 if __name__ == '__main__':
-    # print(PlanesInfo.create_obj("Russia"))
+    print(PlanesInfo.create_obj("Russia"))
     airplane = PlanesInfo("T", 111, 2200, 500)
     airplane1 = PlanesInfo("555", 11, 2500, 600)
     print(airplane < airplane1)
