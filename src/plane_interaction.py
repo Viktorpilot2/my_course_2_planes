@@ -9,20 +9,23 @@ class PlanesInfo:
     __slots__ = ("reg_country", "callsign", "baro_altitude", "velocity")
 
     def __init__(
-        self, reg_country: str = None, callsign: str = None, baro_altitude: int | float = 0, velocity: int | float = 0
+        self, reg_country: str | None = None, callsign: str | None = None, baro_altitude: int | float = 0, velocity: int | float = 0
     ) -> None:
         """Инициализация экземпляра класса основных данных по самолетам"""
         self.reg_country = reg_country
-        self.callsign = callsign.strip()
+        self.callsign = callsign.strip() if callsign else callsign
         self.baro_altitude = baro_altitude
         self.velocity = velocity
         self.__is_valid_data()
 
     @classmethod
-    def create_obj(cls, country: str):
+    def create_obj(cls, country: str) -> list[PlanesInfo]:
         """Классметод создания списка объектов основных данных по самолетам"""
         data_airplanes = CoordsPlanes().get_info_planes(country)
-        list_airplanes = [cls(data[2], data[1].strip(), data[7], data[9]) for data in data_airplanes.get("states")]
+        if data_airplanes:
+            list_airplanes = [cls(data[2], data[1].strip(), data[7], data[9]) for data in data_airplanes.get("states", [])]
+        else:
+            list_airplanes = []
         return list_airplanes
 
     def __lt__(self, other: PlanesInfo) -> bool:
@@ -36,9 +39,9 @@ class PlanesInfo:
             self.reg_country = "Страна не указана"
         if not isinstance(self.callsign, str) or self.callsign is None or self.callsign == "":
             self.callsign = "Позывной не указан"
-        if not isinstance(self.baro_altitude, int | float) or self.baro_altitude < 0:
+        if not isinstance(self.baro_altitude, int | float) or self.baro_altitude < 0 or self.baro_altitude is None:
             self.baro_altitude = 0
-        if not isinstance(self.velocity, int | float) or self.velocity < 0:
+        if not isinstance(self.velocity, int | float) or self.velocity < 0 or self.velocity is None:
             self.velocity = 0
 
 

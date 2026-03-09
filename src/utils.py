@@ -9,7 +9,7 @@ def filtr_airplanes(airplanes: WriteFileJson, altitude: str) -> list[dict | None
             return [
                 x
                 for x in WriteFileJson.get_airplane(airplanes)
-                if list_altitude[0] <= x.get("baro_altitude") <= list_altitude[1]
+                if x is not None and list_altitude[0] <= x.get("baro_altitude", 0) <= list_altitude[1]
             ]
         except (ValueError, IndexError):
             print("Неправильно введен диапазон высот")
@@ -17,11 +17,11 @@ def filtr_airplanes(airplanes: WriteFileJson, altitude: str) -> list[dict | None
             continue
 
 
-def sort_airplanes(n: str, filtred_airplane: list[dict | None], reverse: bool = True) -> list[dict | None]:
+def sort_airplanes(n: str | int, filtred_airplane: list[dict | None], reverse: bool = True) -> list[dict | None]:
     """Сортировка и возврат топ списка самолетов по высоте полета"""
     while True:
         try:
-            sorted_airplanes_ = sorted(filtred_airplane, key=lambda x: x.get("baro_altitude"), reverse=reverse)
+            sorted_airplanes_ = sorted(filtred_airplane, key=lambda x: x.get("baro_altitude", 0) if x is not None else 0, reverse=reverse)
             top_n_airplans = sorted_airplanes_[: int(n)]
             return top_n_airplans
         except (ValueError, TypeError):

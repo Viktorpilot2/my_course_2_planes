@@ -15,7 +15,7 @@ class WriteFile(ABC):
         pass
 
     @abstractmethod
-    def get_airplane(self) -> None:
+    def get_airplane(self) -> list[dict | None]:
         """Абстрактный метод чтения информации о самолетах из json файла"""
         pass
 
@@ -54,19 +54,20 @@ class WriteFileJson(WriteFile):
         with open(self.path, "w") as f:
             json.dump([], f)
 
-    def get_airplane(self) -> None | list[dict | None]:
+    def get_airplane(self) -> list[dict | None]:
         """Чтение информации о самолетах из json файла"""
         if not os.path.exists(self.path):
             self.create_path()
+            self.list_planes = []
         else:
             try:
                 with open(self.path, "r", encoding="utf-8") as f:
                     self.list_planes = json.load(f)
             except JSONDecodeError:
                 self.list_planes = []
-            return self.list_planes
+        return self.list_planes
 
-    def get_list_airplanes(self, plane: PlanesInfo) -> list[dict]:
+    def get_list_airplanes(self, plane: PlanesInfo) -> list[dict | None]:
         """Создание обновленного списка словарей с информацией о самолетах"""
         self.list_planes = self.get_airplane()
         self.dict_plane = self.get_dict_airplanes(plane)
