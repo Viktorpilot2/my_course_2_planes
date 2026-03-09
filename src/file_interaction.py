@@ -28,6 +28,11 @@ class WriteFileJson(WriteFile):
         self.list_planes = []
         self.dict_plane = {}
 
+    @property
+    def path(self):
+        """Создание сеттера для пути к json-файлу"""
+        return self.__path
+
     def get_dict_airplanes(self, plane):
         """Преобразование экземпляра класса PlanesInfo в словарь с данными о самолете"""
         self.dict_plane = {"reg_country": plane.reg_country, "callsign": plane.callsign,
@@ -36,16 +41,16 @@ class WriteFileJson(WriteFile):
 
     def create_path(self):
         """Создание файла json с пустым списком для дальнейшей записи информации о самолетах"""
-        with open(self.__path, "w") as f:
+        with open(self.path, "w") as f:
             json.dump([], f)
 
     def get_airplane(self):
         """Чтение информации о самолетах из json файла"""
-        if not os.path.exists(self.__path):
+        if not os.path.exists(self.path):
             self.create_path()
         else:
             try:
-                with open(self.__path, "r", encoding="utf-8") as f:
+                with open(self.path, "r", encoding="utf-8") as f:
                     self.list_planes = json.load(f)
             except JSONDecodeError:
                 self.list_planes = []
@@ -62,7 +67,7 @@ class WriteFileJson(WriteFile):
     def add_airplane(self, plane):
         """Запись в файл обновленного списка словарей с информацией о самолетах"""
         self.list_planes = self.get_list_airplanes(plane)
-        with open(self.__path, "w", encoding="utf-8") as f:
+        with open(self.path, "w", encoding="utf-8") as f:
             json.dump(self.list_planes, f, indent=4, ensure_ascii=False)
 
     def del_airplane(self, plane):
@@ -71,7 +76,7 @@ class WriteFileJson(WriteFile):
         self.dict_plane = self.get_dict_airplanes(plane)
         if self.dict_plane in self.list_planes:
                 self.list_planes.remove(self.dict_plane)
-        with open(self.__path, "w", encoding="utf-8") as f:
+        with open(self.path, "w", encoding="utf-8") as f:
             json.dump(self.list_planes, f, indent=4, ensure_ascii=False)
 
 
