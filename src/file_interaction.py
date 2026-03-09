@@ -31,8 +31,8 @@ class WriteFileJson(WriteFile):
     ) -> None:
         """Инициализация экземпляра класса записи в файл информации о самолетах"""
         self.__path = path
-        self.list_planes:list[None | dict] = []
-        self.dict_plane:dict = {}
+        self.list_planes: list[None | dict] = []
+        self.dict_plane: dict = {}
 
     @property
     def path(self) -> str:

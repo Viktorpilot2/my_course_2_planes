@@ -21,7 +21,9 @@ def sort_airplanes(n: str | int, filtred_airplane: list[dict | None], reverse: b
     """Сортировка и возврат топ списка самолетов по высоте полета"""
     while True:
         try:
-            sorted_airplanes_ = sorted(filtred_airplane, key=lambda x: x.get("baro_altitude", 0) if x is not None else 0, reverse=reverse)
+            sorted_airplanes_ = sorted(
+                filtred_airplane, key=lambda x: x.get("baro_altitude", 0) if x is not None else 0, reverse=reverse
+            )
             top_n_airplans = sorted_airplanes_[: int(n)]
             return top_n_airplans
         except (ValueError, TypeError):
@@ -33,7 +35,11 @@ def sort_airplanes(n: str | int, filtred_airplane: list[dict | None], reverse: b
 def filtr_country_airplanes(airplanes: WriteFileJson, reg_countryes: list[str]) -> list[dict]:
     """Фильтрация списка самолетов по стране регистрации"""
     reg_countryes = [*map(lambda x: x.lower(), reg_countryes)]
-    return [x for x in WriteFileJson.get_airplane(airplanes) if x.get("reg_country").lower() in reg_countryes]
+    return [
+        x
+        for x in WriteFileJson.get_airplane(airplanes)
+        if x is not None and x.get("reg_country", "Страна не указана").lower() in reg_countryes
+    ]
 
 
 if __name__ == "__main__":  # pragma: no cover

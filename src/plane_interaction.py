@@ -9,7 +9,11 @@ class PlanesInfo:
     __slots__ = ("reg_country", "callsign", "baro_altitude", "velocity")
 
     def __init__(
-        self, reg_country: str | None = None, callsign: str | None = None, baro_altitude: int | float = 0, velocity: int | float = 0
+        self,
+        reg_country: str | None = None,
+        callsign: str | None = None,
+        baro_altitude: int | float = 0,
+        velocity: int | float = 0,
     ) -> None:
         """Инициализация экземпляра класса основных данных по самолетам"""
         self.reg_country = reg_country
@@ -23,7 +27,9 @@ class PlanesInfo:
         """Классметод создания списка объектов основных данных по самолетам"""
         data_airplanes = CoordsPlanes().get_info_planes(country)
         if data_airplanes:
-            list_airplanes = [cls(data[2], data[1].strip(), data[7], data[9]) for data in data_airplanes.get("states", [])]
+            list_airplanes = [
+                cls(data[2], data[1].strip(), data[7], data[9]) for data in data_airplanes.get("states", [])
+            ]
         else:
             list_airplanes = []
         return list_airplanes
