@@ -19,7 +19,7 @@ class PlanesInfo:
         self.__is_valid_data()
 
     @classmethod
-    def create_obj(cls, country: str) -> list[PlanesInfo | None]:
+    def create_obj(cls, country: str):
         """Классметод создания списка объектов основных данных по самолетам"""
         data_airplanes = CoordsPlanes().get_info_planes(country)
         list_airplanes = [cls(data[2], data[1].strip(), data[7], data[9]) for data in data_airplanes.get("states")]

@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Any
 
 import requests
 
@@ -18,7 +17,7 @@ class AeroplanesAPI(ABC):
         pass
 
     @abstractmethod
-    def get_info_planes(self, country: str) -> list[dict]:
+    def get_info_planes(self, country: str):
         """Абстрактный метод получения данных по самолетам через API"""
         pass
 
@@ -56,7 +55,7 @@ class CoordsPlanes(AeroplanesAPI):
         """Сеттер, возвращающий приватный атрибут проверки статуса ответа API"""
         return self.__connect_api()
 
-    def get_info_planes(self, country: str, limit: int = 1) -> list[Any]:
+    def get_info_planes(self, country: str, limit: int = 1) -> dict | None:
         params_nominatim = {
             "country": country,
             "format": "json",
@@ -66,11 +65,8 @@ class CoordsPlanes(AeroplanesAPI):
             response_1 = requests.get(self.__url_nomantim, headers=self.headers_nominatim, params=params_nominatim)
             s, n, w, e = [i.get("boundingbox") for i in response_1.json()][0]
             params_opensky = {"lamin": s, "lamax": n, "lomin": w, "lomax": e}
-
             response_2 = requests.get(self.__url_opensky, params=params_opensky)
             self.airplanes = response_2.json()
-        else:
-            self.airplanes = []
         return self.airplanes
 
 
