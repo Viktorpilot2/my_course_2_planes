@@ -1,10 +1,17 @@
+from __future__ import annotations
+
 from src.api_interaction import CoordsPlanes
 
 
 class PlanesInfo:
+    """Класс формирования основных данных по самолетам"""
 
     __slots__ = ("reg_country", "callsign", "baro_altitude", "velocity")
-    def __init__(self, reg_country=None, callsign=None, baro_altitude=0, velocity=0):
+
+    def __init__(
+        self, reg_country: str = None, callsign: str = None, baro_altitude: int | float = 0, velocity: int | float = 0
+    ) -> None:
+        """Инициализация экземпляра класса основных данных по самолетам"""
         self.reg_country = reg_country
         self.callsign = callsign.strip()
         self.baro_altitude = baro_altitude
@@ -12,18 +19,19 @@ class PlanesInfo:
         self.__is_valid_data()
 
     @classmethod
-    def create_obj(cls, country):
+    def create_obj(cls, country: str) -> list[PlanesInfo | None]:
+        """Классметод создания списка объектов основных данных по самолетам"""
         data_airplanes = CoordsPlanes().get_info_planes(country)
         list_airplanes = [cls(data[2], data[1].strip(), data[7], data[9]) for data in data_airplanes.get("states")]
         return list_airplanes
 
-    def __lt__(self, other):
+    def __lt__(self, other: PlanesInfo) -> bool:
         return self.baro_altitude < other.baro_altitude
 
-    def __gt__(self, other):
+    def __gt__(self, other: PlanesInfo) -> bool:
         return self.velocity > other.velocity
 
-    def __is_valid_data(self):
+    def __is_valid_data(self) -> None:
         if not isinstance(self.reg_country, str) or self.reg_country is None or self.reg_country == "":
             self.reg_country = "Страна не указана"
         if not isinstance(self.callsign, str) or self.callsign is None or self.callsign == "":
@@ -34,7 +42,7 @@ class PlanesInfo:
             self.velocity = 0
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":  # pragma: no cover
     print(PlanesInfo.create_obj("Russia"))
     airplane = PlanesInfo("T", "ACA411", 2200, 500)
     airplane1 = PlanesInfo("555", "DAL464", 2500, 600)

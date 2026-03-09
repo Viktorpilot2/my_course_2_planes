@@ -1,10 +1,11 @@
 from src.api_interaction import CoordsPlanes
 from src.file_interaction import WriteFileJson
 from src.plane_interaction import PlanesInfo
-from src.utils import sort_airplanes, filtr_airplanes, filtr_country_airplanes
+from src.utils import filtr_airplanes, filtr_country_airplanes, sort_airplanes
 
 
-def user_interaction():
+def user_interaction() -> None:
+    """Функция взаимодействия с пользователем"""
     country = input("Введите название страны: ")
 
     # создание объекта класса "CoordsPlanes" при работе с API (список всех самолетов в заданном квадрате)
@@ -45,9 +46,12 @@ def user_interaction():
     print(sorted_airplanes)
 
     # получение списка самолетов по стране регистрации
-    reg_countryes_ = input("Введите названия стран для фильтрации по стране регистрации через пробел: ").strip().split()
+    reg_countryes_ = (
+        input("Введите названия стран для фильтрации по стране регистрации через пробел: ").strip().split()
+    )
     filtred_country_airplanes = filtr_country_airplanes(airplanes, reg_countryes_)
     print(filtred_country_airplanes)
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":  # pragma: no cover
     user_interaction()
