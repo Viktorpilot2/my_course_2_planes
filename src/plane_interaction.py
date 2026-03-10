@@ -27,20 +27,21 @@ class PlanesInfo:
         """Классметод создания списка объектов основных данных по самолетам"""
         data_airplanes = CoordsPlanes().get_info_planes(country)
         if data_airplanes:
-            list_airplanes = [
-                cls(data[2], data[1].strip(), data[7], data[9]) for data in data_airplanes.get("states", [])
-            ]
+            list_airplanes = [cls(data[2], data[1], data[7], data[9]) for data in data_airplanes.get("states", [])]
         else:
             list_airplanes = []
         return list_airplanes
 
     def __lt__(self, other: PlanesInfo) -> bool:
+        """Магический метод для сравнения высот полета двух самолетов"""
         return self.baro_altitude < other.baro_altitude
 
     def __gt__(self, other: PlanesInfo) -> bool:
+        """Магический метод для сравнения скоростей полета двух самолетов"""
         return self.velocity > other.velocity
 
     def __is_valid_data(self) -> None:
+        """Проверка валидности значений при инициализации экземпляра класса основных данных по самолетам"""
         if not isinstance(self.reg_country, str) or self.reg_country is None or self.reg_country == "":
             self.reg_country = "Страна не указана"
         if not isinstance(self.callsign, str) or self.callsign is None or self.callsign == "":

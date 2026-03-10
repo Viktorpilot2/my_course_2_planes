@@ -1,7 +1,7 @@
 from src.file_interaction import WriteFileJson
 
 
-def filtr_airplanes(airplanes: WriteFileJson, altitude: str) -> list[dict | None]:
+def filtr_airplanes(airplanes: WriteFileJson, altitude: str) -> list[dict]:
     """Фильтрация самолетов по высоте полета, заданной пользователем"""
     while True:
         try:
@@ -17,7 +17,7 @@ def filtr_airplanes(airplanes: WriteFileJson, altitude: str) -> list[dict | None
             continue
 
 
-def sort_airplanes(n: str | int, filtred_airplane: list[dict | None], reverse: bool = True) -> list[dict | None]:
+def sort_airplanes(n: str | int, filtred_airplane: list[dict], reverse: bool = True) -> list[dict]:
     """Сортировка и возврат топ списка самолетов по высоте полета"""
     while True:
         try:
@@ -53,7 +53,9 @@ if __name__ == "__main__":  # pragma: no cover
     print(sorted_airplanes)
 
     reg_countryes_ = (
-        input("Введите названия стран для фильтрации по стране регистрации через пробел: ").strip().split()
+        input("Введите названия стран для фильтрации по стране регистрации через запятую(без пробела): ")
+        .strip()
+        .split(",")
     )
     filtred_country_airplanes = filtr_country_airplanes(airplanes_country, reg_countryes_)
     print(filtred_country_airplanes)

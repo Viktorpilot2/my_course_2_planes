@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Any
 
 import requests
 
@@ -58,6 +57,7 @@ class CoordsPlanes(AeroplanesAPI):
         return self.__connect_api()
 
     def get_info_planes(self, country: str, limit: int = 1) -> dict:
+        """Функция, возвращающая данные о самолетах в заданной стране"""
         params_nominatim = {
             "country": country,
             "format": "json",
@@ -70,16 +70,6 @@ class CoordsPlanes(AeroplanesAPI):
             response_2 = requests.get(self.__url_opensky, params=params_opensky)
             self.airplanes = response_2.json()
         return self.airplanes
-
-    #     return {'time': 1772824667, 'states': [
-    # ['39de4f', 'TVF97HM ', 'France', 1772824667, 1772824667, 8.2904, 42.5036, 11590.02, False, 240.07, 329.48, 0, None,
-    #  11650.98, '1000', False, 0],
-    # ['4b1819', 'SWR27M  ', 'Switzerland', 1772824666, 1772824666, 3.4166, 50.6344, 11887.2, False, 232.92, 136.79, 0,
-    #  None, 11925.3, '2077', False, 0],
-    # ['a8a812', 'N657PT  ', 'United States', 1772824660, 1772824663, -122.9559, 45.5429, None, True, 0, 357.19, None,
-    #  None, None, None, False, 0],
-    # ['a2e5ec', 'SKW4261 ', 'United States', 1772824666, 1772824666, -100.0093, 47.3865, 9448.8, False, 218.71, 105.83,
-    #  0.33, None, 9265.92, None, False, 0]]}
 
 
 if __name__ == "__main__":  # pragma: no cover
