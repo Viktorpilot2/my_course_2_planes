@@ -93,9 +93,9 @@ class WriteFileJson(WriteFile):
 
 if __name__ == "__main__":  # pragma: no cover
     ap = WriteFileJson()
-    airplane3 = PlanesInfo("T", "A1112", 2200, 500)
-    airplane4 = PlanesInfo("W", "B1113", 3200, 600)
-    airplane5 = PlanesInfo("S", "C1114", 4200, 400)
+    airplane3 = PlanesInfo("Canada", "A1112", 2200, 500)
+    airplane4 = PlanesInfo("France", "B1113", 3200, 600)
+    airplane5 = PlanesInfo("Russia", "C1114", 4200, 400)
     ap.add_airplane(airplane3)
     ap.add_airplane(airplane4)
     ap.add_airplane(airplane5)

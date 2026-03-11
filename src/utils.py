@@ -33,7 +33,7 @@ def sort_airplanes(n: str | int, filtred_airplane: list[dict], reverse: bool = T
 
 
 def filtr_country_airplanes(airplanes: WriteFileJson, reg_countryes: list[str]) -> list[dict]:
-    """Фильтрация списка самолетов по стране регистрации"""
+    """Фильтрация списка самолетов по странам регистрации"""
     reg_countryes = [*map(lambda x: x.lower(), reg_countryes)]
     return [
         x

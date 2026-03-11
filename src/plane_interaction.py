@@ -54,7 +54,7 @@ class PlanesInfo:
 
 if __name__ == "__main__":  # pragma: no cover
     print(PlanesInfo.create_obj("Russia"))
-    airplane = PlanesInfo("T", "ACA411", 2200, 500)
-    airplane1 = PlanesInfo("555", "DAL464", 2500, 600)
+    airplane = PlanesInfo("Canada", "ACA411", 2200, 500)
+    airplane1 = PlanesInfo("Russia", "DAL464", 2500, 600)
     print(airplane < airplane1)
     print(airplane > airplane1)

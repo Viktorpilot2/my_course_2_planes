@@ -73,6 +73,5 @@ class CoordsPlanes(AeroplanesAPI):
 
 
 if __name__ == "__main__":  # pragma: no cover
-    aa = CoordsPlanes()
-    airplanes = aa.get_info_planes("Russia")
-    print(airplanes)
+    airplanes = CoordsPlanes()
+    print(airplanes.get_info_planes("Russia"))
