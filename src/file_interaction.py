@@ -26,6 +26,8 @@ class WriteFile(ABC):
 
 
 class WriteFileJson(WriteFile):
+    """Класс работы с экземпляром самолета"""
+
     def __init__(
         self, path: str = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data/airplanes.json")
     ) -> None:

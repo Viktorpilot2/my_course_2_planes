@@ -10,7 +10,7 @@ def user_interaction() -> None:
 
     # создание объекта класса "CoordsPlanes" при работе с API (список всех самолетов в заданном квадрате)
     airplanes_obj = CoordsPlanes()
-    print(f"Список объектов самолетов в пределах заданной страны из API: {airplanes_obj.get_info_planes(country)}")
+    airplanes_obj.get_info_planes(country)
 
     # создание объекта класса "PlanesInfo" отдельно по каждому самолету
     airplane1 = PlanesInfo("Canada", "ACA411", 7924.8, 192.45)
@@ -21,7 +21,7 @@ def user_interaction() -> None:
     print(f"Сравнение скорости полета двух самолетов (V1 > V2): {airplane1 > airplane2}")
     # создание объекта класса "PlanesInfo" из полученного класса "CoordsPlanes"
     # (выбранные данные по всем самолетам полученным по API)
-    print(f"Список объектов основных данных по самолетам из API: {PlanesInfo.create_obj(country)}")
+    PlanesInfo.create_obj(country)
 
     # создание объекта класса "WriteFileJson" (запись данных по самолетам в json-файл)
     airplanes = WriteFileJson()
@@ -47,7 +47,9 @@ def user_interaction() -> None:
 
     # получение списка самолетов по стране регистрации
     reg_countryes_ = (
-        input("Введите названия стран для фильтрации по стране регистрации через запятую: ").strip().split(",")
+        input("Введите названия стран для фильтрации по стране регистрации " "через запятую (без пробела): ")
+        .strip()
+        .split(",")
     )
     filtred_country_airplanes = filtr_country_airplanes(airplanes, reg_countryes_)
     print(f"Самолеты, отфильтрованные по стране регистрации: {filtred_country_airplanes}")
